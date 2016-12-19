@@ -134,40 +134,25 @@ De unit tests van de oefeningen worden in volgorde uitgevoerd. Zolang er nog fou
 	```
 
 6. Dit script zal een bestand kopiëren. Bron en doel worden aan de gebruiker gevraagd. Test of het doelbestand bestaat. Indien wel, wordt het script afgebroken.  (opm. geen unit tests)
-
-	Oplossing
-	```
-	#! /bin/bash
-	if [ "${#}" -ne "2" ]; then
-		echo "Fout in aantal parameters"
-		exit 1
-	fi
-	if [ -f "${2}" ]; then
-		echo "Bestandlocatie bestaat al"
-		exit 2
-	fi
-	cp "${1}" "${2}"
-	```
-
 7. Sorteer de inhoud van een bestand (arg1) en toon de laatste regels (aantal regels = arg2). Indien argument 1 ontbreekt, melding geven en afbreken. Indien argument 2 ontbreekt neemt men 20 als default waarde. Om te testen maak je een bestand aan met alle letters van het alfabet, in de volgorde van je toetsenbord. (opm. geen unit tests)
+8. Dit script moet testen of een bestand (opvragen aan gebruiker) bestaat en uitvoerbaar is, indien niet, moet het uitvoerbaar gemaakt worden.
+9. Dit script maakt gebruik van het cal (kalender commando). De gebruiker wordt verplicht om de drie eerste letters van de maand (jan-feb-maa-apr-mei-jun-jul-aug-sep-okt-nov-dec) in te geven. Geef foutmelding indien geen correcte maand wordt ingegeven en stop het script. De gebruiker kan ook het jaartal ingeven (niet verplicht). Indien niet ingegeven wordt het huidige jaar gebruikt
 
 	Oplossing:
 	```
 	#! /bin/bash
-	if [ "${#}" -lt "1" ]; then
-		echo "Minstens 1 parameters vereisd"
+	if [ "${#}" -ne "1" ]; then
+		echo "Fout in aantal parameters"
 		exit 1
+	fi	
+	if [ -f "${1}" ]; then
+		if [ -x "${1}" ]; then
+			chmod -x "${1}"
+			echo "Bestand uitvoerbaar"
+		fi
 	fi
-	if [ "${#}" -eq "2"]; then
-		aantal="${2}"
-	else
-		aantal="20"
-	fi
-	sort "${1}" | tail -n "$aantal" 
 	```
 
-8. Dit script moet testen of een bestand (opvragen aan gebruiker) bestaat en uitvoerbaar is, indien niet, moet het uitvoerbaar gemaakt worden.
-9. Dit script maakt gebruik van het cal (kalender commando). De gebruiker wordt verplicht om de drie eerste letters van de maand (jan-feb-maa-apr-mei-jun-jul-aug-sep-okt-nov-dec) in te geven. Geef foutmelding indien geen correcte maand wordt ingegeven en stop het script. De gebruiker kan ook het jaartal ingeven (niet verplicht). Indien niet ingegeven wordt het huidige jaar gebruikt
 10. Schrijf een script `passphrase.sh` dat een willekeurige wachtwoordzin genereert zoals gesuggereerd door <http://xkcd.com/936/>. Gebruik een woordenlijst zoals `/usr/share/dict/words` (moet je mogelijks installeren). Opties en argumenten:
     - `passphrase.sh [-h|-?|--help]`: druk uitleg over het commando af en sluit af met exit-status 0. Eventuele andere opties en argumenten worden genegeerd.
     - `passphrase.sh [N] [WORDS]`
